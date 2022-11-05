@@ -1,8 +1,8 @@
 import axios from "axios";
 import logger from "./logService";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
 
-axios.interceptors.response.use(null, error => {
+axios.interceptors.response.use(undefined, error => {
   const expectedError =
     error.response &&
     error.response.status >= 400 &&
@@ -15,6 +15,13 @@ axios.interceptors.response.use(null, error => {
 
   return Promise.reject(error);
 });
+
+axios.defaults.headers.common["x-api-key"] = ' live_2sIxW4mr1DD16Ekoe4F4zxXAFlKzP2tvfM0t5KLIM3mdBAfVx1ScER4981E5IQPX ';
+
+axios.defaults.baseURL = "https://api.thecatapi.com/v1";
+
+axios.defaults.headers.post["Content-Type"] = "application/json";
+
 
 
 export default {

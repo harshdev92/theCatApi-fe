@@ -4,7 +4,7 @@
 
 function init() {}
 
-function log(error) {
+function log(error:any) {
   console.error(error);
 }
 
