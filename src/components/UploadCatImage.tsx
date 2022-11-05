@@ -1,6 +1,8 @@
 import react, { useState } from 'react'
-import { uploadCat } from '../services/catServices'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+
+import { uploadCat } from '../services/catServices'
 
 const UploadCatImage = () => {
     const [image, setImage] = useState<any>()
@@ -116,6 +118,12 @@ const UploadCatImage = () => {
                         'Upload'
                     )}
                 </button>
+                <Link
+                    to={'/'}
+                    className="text-center text-indigo-900 cursor-pointer hover:text-indigo-400"
+                >
+                    View All Upload Cat Images
+                </Link>
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import http from './httpService'
-const apiEndpoint = '/images'
+const apiEndpoint = '/images/search?limit=100'
 
 export function getCats() {
     return http.get(apiEndpoint)
