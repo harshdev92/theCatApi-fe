@@ -16,10 +16,10 @@ axios.interceptors.response.use(undefined, (error) => {
     return Promise.reject(error)
 })
 
-axios.defaults.headers.common['x-api-key'] =
-    ' live_2sIxW4mr1DD16Ekoe4F4zxXAFlKzP2tvfM0t5KLIM3mdBAfVx1ScER4981E5IQPX '
+axios.defaults.headers.common['x-api-key'] = process.env.REACT_APP_API_KEY
+ 
 
-axios.defaults.baseURL = 'https://api.thecatapi.com/v1'
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
 
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
