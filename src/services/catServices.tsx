@@ -11,3 +11,17 @@ export function uploadCat(image: File) {
     data.append('upload_preset', 'cat-images')
     return http.post('/images/upload', data)
 }
+
+export function upVoteCat(id: string) {
+    let body = { image_id: id, value: 1 }
+    return http.post(`/votes`, body)
+}
+
+export function downVoteCat(id: string) {
+    let body = { image_id: id, value: -1 }
+    return http.post(`/votes`, body)
+}
+
+export function getVotes() {
+    return http.get(`/votes`)
+}

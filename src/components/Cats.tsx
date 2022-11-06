@@ -1,7 +1,13 @@
 import react, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-import { getCats } from '../services/catServices'
+import {
+    getCats,
+    upVoteCat,
+    downVoteCat,
+    getVotes,
+} from '../services/catServices'
 import CatGallery from './CatsGallery'
 import LoadingIcon from './icons/LoadingIcons'
 
@@ -13,6 +19,7 @@ type Cat = {
     height: number
     breeds: Array<Breed>
     categories: Array<Category>
+    upvotes: number
 }
 
 type Breed = {
@@ -35,10 +42,60 @@ const Cats = () => {
     useEffect(() => {
         setLoading(true)
         getCats().then((response) => {
+            response.data.map((cat: Cat) => {
+                cat.upvotes = 0
+            })
+
             setCats(response.data)
-            setLoading(false)
         })
+        getVotes().then((response) => {
+            const votes = response.data
+            const newCats = cats.map((cat) => {
+                let counter = 0
+                for (let i = 0; i < votes.length; i++) {
+                    if (votes[i].image_id === cat.id) {
+                        counter += votes[i].value
+                    }
+                }
+                return { ...cat, upvotes: counter }
+            })
+            setCats(newCats)
+        })
+        setLoading(false)
     }, [])
+
+    const handleCatUpVote = async (id: string) => {
+        const updatedCats = cats.map((cat) => {
+            if (cat.id === id) {
+                cat.upvotes = cat.upvotes + 1
+            }
+            return cat
+        })
+        setCats(updatedCats)
+
+        try {
+            await upVoteCat(id)
+            toast.success('Cat voted successfully')
+        } catch (error) {
+            toast.error('Error upvoting cat')
+        }
+    }
+
+    const handleCatDownVote = async (id: string) => {
+        const updatedCats = cats.map((cat) => {
+            if (cat.id === id) {
+                cat.upvotes = cat.upvotes - 1
+            }
+            return cat
+        })
+        setCats(updatedCats)
+        try {
+            await downVoteCat(id)
+            toast.success('Cat downvoted successfully')
+        } catch (error) {
+            toast.error('Error downvoting cat')
+        }
+    }
 
     return (
         <div className="container">
@@ -56,7 +113,11 @@ const Cats = () => {
                     <LoadingIcon width="w-40" height="w-40" />
                 </div>
             ) : (
-                <CatGallery cats={cats} />
+                <CatGallery
+                    cats={cats}
+                    handleCatUpVote={handleCatUpVote}
+                    handleCatDownVote={handleCatDownVote}
+                />
             )}
         </div>
     )
