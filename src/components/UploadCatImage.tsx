@@ -6,11 +6,10 @@ import { uploadCat } from '../services/catServices'
 import LoadingIcon from './icons/LoadingIcons'
 import UploadIcon from './icons/UploadIcon'
 
-
 const UploadCatImage = () => {
     const [image, setImage] = useState<any>()
     const [uploading, setUploading] = useState(false)
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -25,15 +24,13 @@ const UploadCatImage = () => {
                 await uploadCat(image)
                 toast.success('Cat image uploaded successfully')
                 setUploading(false)
-                navigate("/");
+                navigate('/')
             } catch (error) {
                 toast.error('Error uploading cat image')
                 setUploading(false)
             }
         }
     }
-
-
 
     return (
         <div className="flex items-center justify-center h-screen">

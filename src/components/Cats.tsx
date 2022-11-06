@@ -46,44 +46,34 @@ const Cats = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
+        handleRequest()
+    }, [])
+
+    const handleRequest = async () => {
         setLoading(true)
-        getCats().then((response) => {
-            let cats = response.data
-            let newCats = cats.map((cat: Cat) => {
-                return { ...cat, upvotes: 0 }
-            })
-            setLoading(false)
-            setCats(newCats)
-        })
-        getVotes().then((response) => {
-            const votes = response.data
-            const newCats = cats.map((cat) => {
-                let counter = 0
-                for (let i = 0; i < votes.length; i++) {
-                    if (votes[i].image_id === cat.id) {
-                        counter += votes[i].value
-                    }
+        const cats = await getCats()
+        const votes = await getVotes()
+        const favourites = await getFavourites()
+        const newCats = cats.data.map((cat: Cat) => {
+            let counter = 0
+            for (let i = 0; i < votes.data.length; i++) {
+                if (votes.data[i].image_id === cat.id) {
+                    counter += votes.data[i].value
                 }
-                return { ...cat, upvotes: counter }
-            })
-            setCats(newCats)
+            }
+            let isFavourite = false
+            for (let i = 0; i < favourites.data.length; i++) {
+                if (favourites.data[i].image_id === cat.id) {
+                    isFavourite = true
+                }
+            }
+            return { ...cat, upvotes: counter, isFavourite }
         })
 
-        getFavourites().then((response) => {
-            const favourites = response.data
-            setFavourites(favourites)
-            const newCats = cats.map((cat) => {
-                let isFavourite = false
-                for (let i = 0; i < favourites.length; i++) {
-                    if (favourites[i].image_id === cat.id) {
-                        isFavourite = true
-                    }
-                }
-                return { ...cat, isFavourite }
-            })
-            setCats(newCats)
-        })
-    }, [])
+        setCats(newCats)
+        setFavourites(favourites.data)
+        setLoading(false)
+    }
 
     const handleCatUpVote = async (id: string) => {
         const updatedCats = cats.map((cat) => {
