@@ -17,7 +17,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Cats />} />
                         <Route path="/uploads" element={<UploadCatImage />} />
-                        <Route path="*" element={<h1>404</h1>} />
+                        <Route path="*" element={<Cats />} />
                     </Routes>
                 </Router>
             </main>
