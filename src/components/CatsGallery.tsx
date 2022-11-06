@@ -1,5 +1,7 @@
+import UnFavoriteIcon from './icons/UnFavouriteIcon'
 import ThumbsDownIcon from './icons/ThumbsDownIcon'
 import ThumbsUpIcon from './icons/ThumbsUpIcon'
+import FavouriteIcon from './icons/FavouriteIcon'
 
 type CatProps = {
     name: string
@@ -10,6 +12,7 @@ type CatProps = {
     breeds: Array<Breed>
     upvotes: number
     categories: Array<Category>
+    isFavourite: boolean
 }
 
 type Breed = {
@@ -29,12 +32,16 @@ type CatGalleryProps = {
     cats: Array<CatProps>
     handleCatUpVote: (id: string) => void
     handleCatDownVote: (id: string) => void
+    handleCatFavourite: (id: string) => void
+    handleCatUnFavourite: (id: string) => void
 }
 
 const CatGallery = ({
     cats,
     handleCatDownVote,
     handleCatUpVote,
+    handleCatFavourite,
+    handleCatUnFavourite,
 }: CatGalleryProps) => (
     <section className="overflow-hidden text-gray-700 ">
         <div className="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
@@ -57,6 +64,17 @@ const CatGallery = ({
                             handleCatDownVote={handleCatDownVote}
                         />
                         <p className="ml-3">{cat.upvotes}</p>
+                        {!cat.isFavourite ? (
+                            <UnFavoriteIcon
+                                id={cat.id}
+                                handleCatUnFavourite={handleCatUnFavourite}
+                            />
+                        ) : (
+                            <FavouriteIcon
+                                id={cat.id}
+                                handleCatFavourite={handleCatFavourite}
+                            />
+                        )}
                     </div>
                 ))}
             </div>

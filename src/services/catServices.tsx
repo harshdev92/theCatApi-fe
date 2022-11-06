@@ -1,8 +1,7 @@
 import http from './httpService'
-const apiEndpoint = '/images/search?limit=100'
 
 export function getCats() {
-    return http.get(apiEndpoint)
+    return http.get('/images?limit=100')
 }
 
 export function uploadCat(image: File) {
@@ -24,4 +23,16 @@ export function downVoteCat(id: string) {
 
 export function getVotes() {
     return http.get(`/votes`)
+}
+
+export function updateFavorite(id: string) {
+    return http.post(`/favourites`, { image_id: id })
+}
+
+export function getFavourites() {
+    return http.get(`/favourites`)
+}
+
+export function deleteFavourite(id: string) {
+    return http.delete(`/favourites/${id}`)
 }

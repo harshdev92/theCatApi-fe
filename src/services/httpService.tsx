@@ -1,6 +1,6 @@
 import axios from 'axios'
 import logger from './logService'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 axios.interceptors.response.use(undefined, (error) => {
     const expectedError =

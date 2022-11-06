@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -7,6 +7,9 @@ import {
     upVoteCat,
     downVoteCat,
     getVotes,
+    getFavourites,
+    updateFavorite,
+    deleteFavourite,
 } from '../services/catServices'
 import CatGallery from './CatsGallery'
 import LoadingIcon from './icons/LoadingIcons'
@@ -20,6 +23,8 @@ type Cat = {
     breeds: Array<Breed>
     categories: Array<Category>
     upvotes: number
+    isFavourite: boolean
+    image_id: string
 }
 
 type Breed = {
@@ -37,16 +42,18 @@ type Category = {
 
 const Cats = () => {
     const [cats, setCats] = useState<Cat[]>([])
+    const [favourites, setFavourites] = useState<Cat[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         setLoading(true)
         getCats().then((response) => {
-            response.data.map((cat: Cat) => {
-                cat.upvotes = 0
+            let cats = response.data
+            let newCats = cats.map((cat: Cat) => {
+                return { ...cat, upvotes: 0 }
             })
-
-            setCats(response.data)
+            setLoading(false)
+            setCats(newCats)
         })
         getVotes().then((response) => {
             const votes = response.data
@@ -61,7 +68,21 @@ const Cats = () => {
             })
             setCats(newCats)
         })
-        setLoading(false)
+
+        getFavourites().then((response) => {
+            const favourites = response.data
+            setFavourites(favourites)
+            const newCats = cats.map((cat) => {
+                let isFavourite = false
+                for (let i = 0; i < favourites.length; i++) {
+                    if (favourites[i].image_id === cat.id) {
+                        isFavourite = true
+                    }
+                }
+                return { ...cat, isFavourite }
+            })
+            setCats(newCats)
+        })
     }, [])
 
     const handleCatUpVote = async (id: string) => {
@@ -97,6 +118,42 @@ const Cats = () => {
         }
     }
 
+    const handleCatUnFavourite = async (id: string) => {
+        const updatedCats = cats.map((cat) => {
+            if (cat.id === id) {
+                cat.isFavourite = true
+            }
+            return cat
+        })
+        setCats(updatedCats)
+        try {
+            await updateFavorite(id)
+            toast.success('Cat Added as favourites')
+        } catch (error) {
+            toast.error('Error adding cat as favourite')
+        }
+    }
+
+    const handleCatFavourite = async (id: string) => {
+        const updatedCats = cats.map((cat) => {
+            if (cat.id === id) {
+                cat.isFavourite = false
+            }
+            return cat
+        })
+        setCats(updatedCats)
+        favourites.find((favourite) => {
+            if (favourite.image_id === id) {
+                try {
+                    deleteFavourite(favourite.id)
+                    toast.success('Cat removed from favourites')
+                } catch (error) {
+                    toast.error('Error removing cat from favourites')
+                }
+            }
+        })
+    }
+
     return (
         <div className="container">
             <div className="container py-10 px-10 mx-0 min-w-full flex flex-col items-center">
@@ -117,6 +174,8 @@ const Cats = () => {
                     cats={cats}
                     handleCatUpVote={handleCatUpVote}
                     handleCatDownVote={handleCatDownVote}
+                    handleCatFavourite={handleCatFavourite}
+                    handleCatUnFavourite={handleCatUnFavourite}
                 />
             )}
         </div>
