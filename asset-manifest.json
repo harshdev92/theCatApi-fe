@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/theCatApi-fe/static/css/main.70b58762.css",
-    "main.js": "/theCatApi-fe/static/js/main.d6da0a79.js",
+    "main.js": "/theCatApi-fe/static/js/main.ef39e899.js",
     "static/js/787.5d6868eb.chunk.js": "/theCatApi-fe/static/js/787.5d6868eb.chunk.js",
     "index.html": "/theCatApi-fe/index.html",
     "main.70b58762.css.map": "/theCatApi-fe/static/css/main.70b58762.css.map",
-    "main.d6da0a79.js.map": "/theCatApi-fe/static/js/main.d6da0a79.js.map",
+    "main.ef39e899.js.map": "/theCatApi-fe/static/js/main.ef39e899.js.map",
     "787.5d6868eb.chunk.js.map": "/theCatApi-fe/static/js/787.5d6868eb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.70b58762.css",
-    "static/js/main.d6da0a79.js"
+    "static/js/main.ef39e899.js"
   ]
 }
