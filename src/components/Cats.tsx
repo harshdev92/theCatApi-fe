@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { Cat } from '../types/cats'
 
 import {
     getCats,
@@ -12,33 +13,7 @@ import {
     deleteFavourite,
 } from '../services/catServices'
 import CatGallery from './CatsGallery'
-import LoadingIcon from './icons/LoadingIcons'
-
-type Cat = {
-    name: string
-    id: string
-    url: string
-    width: number
-    height: number
-    breeds: Array<Breed>
-    categories: Array<Category>
-    upvotes: number
-    isFavourite: boolean
-    image_id: string
-}
-
-type Breed = {
-    id: string
-    name: string
-    temperament: string
-    origin: string
-    life_span: string
-}
-
-type Category = {
-    id: number
-    name: string
-}
+import LoadingIcon from '../icons/LoadingIcons'
 
 const Cats = () => {
     const [cats, setCats] = useState<Cat[]>([])

@@ -1,40 +1,8 @@
-import UnFavoriteIcon from './icons/UnFavouriteIcon'
-import ThumbsDownIcon from './icons/ThumbsDownIcon'
-import ThumbsUpIcon from './icons/ThumbsUpIcon'
-import FavouriteIcon from './icons/FavouriteIcon'
-
-type CatProps = {
-    name: string
-    id: string
-    url: string
-    width: number
-    height: number
-    breeds: Array<Breed>
-    upvotes: number
-    categories: Array<Category>
-    isFavourite: boolean
-}
-
-type Breed = {
-    id: string
-    name: string
-    temperament: string
-    origin: string
-    life_span: string
-}
-
-type Category = {
-    id: number
-    name: string
-}
-
-type CatGalleryProps = {
-    cats: Array<CatProps>
-    handleCatUpVote: (id: string) => void
-    handleCatDownVote: (id: string) => void
-    handleCatFavourite: (id: string) => void
-    handleCatUnFavourite: (id: string) => void
-}
+import UnFavoriteIcon from '../icons/UnFavouriteIcon'
+import ThumbsDownIcon from '../icons/ThumbsDownIcon'
+import ThumbsUpIcon from '../icons/ThumbsUpIcon'
+import FavouriteIcon from '../icons/FavouriteIcon'
+import { Cat, CatGalleryProps } from '../types/cats'
 
 const CatGallery = ({
     cats,
@@ -46,7 +14,7 @@ const CatGallery = ({
     <section className="overflow-hidden text-gray-700 ">
         <div className="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
             <div className="flex flex-wrap -m-1 md:-m-2">
-                {cats.map((cat: CatProps) => (
+                {cats.map((cat: Cat) => (
                     <div className="flex flex-wrap w-1/3" key={cat.id}>
                         <div className="w-full p-1 md:p-2">
                             <img

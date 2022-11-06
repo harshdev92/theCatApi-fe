@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { uploadCat } from '../services/catServices'
-import LoadingIcon from './icons/LoadingIcons'
-import UploadIcon from './icons/UploadIcon'
+import LoadingIcon from '../icons/LoadingIcons'
+import UploadIcon from '../icons/UploadIcon'
 
 const UploadCatImage = () => {
     const [image, setImage] = useState<any>()
