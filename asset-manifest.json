@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/harshdev92.github.io/theCatApi-fe/static/css/main.70b58762.css",
+    "main.js": "/harshdev92.github.io/theCatApi-fe/static/js/main.77610c0e.js",
+    "static/js/787.5d6868eb.chunk.js": "/harshdev92.github.io/theCatApi-fe/static/js/787.5d6868eb.chunk.js",
+    "index.html": "/harshdev92.github.io/theCatApi-fe/index.html",
+    "main.70b58762.css.map": "/harshdev92.github.io/theCatApi-fe/static/css/main.70b58762.css.map",
+    "main.77610c0e.js.map": "/harshdev92.github.io/theCatApi-fe/static/js/main.77610c0e.js.map",
+    "787.5d6868eb.chunk.js.map": "/harshdev92.github.io/theCatApi-fe/static/js/787.5d6868eb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.70b58762.css",
+    "static/js/main.77610c0e.js"
+  ]
+}
